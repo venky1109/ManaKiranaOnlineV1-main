@@ -1,0 +1,51 @@
+
+
+
+.card-container-screen {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 7px;
+    width: 319px;
+    margin-bottom: 1.5em;
+    box-shadow: 3px 3px 5px #bde7bd;
+    transition: transform 0.2s ease-in-out;
+    max-height: 500px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: left; /* Center-align the content horizontally */
+    background: #ffffff;
+    max-width: 100%;
+ 
+  }
+  
+
+  
+  .card-container-screen:hover .scroll-buttons-container {
+    opacity: 1; /* Show on hover */
+  }
+  
+
+  .discount-ribbon-screen{
+    position: absolute;
+    top: 34px;
+    left: 5px;
+    background-color: forestgreen; /* A shade of orange, adjust as needed */
+     /* Text color */
+    border-radius: 4px;
+    z-index: 2; /* Ensure the ribbon appears above the image */
+    display: flex;
+    align-items: center;
+    width: 30%;
+    justify-content: center;
+    transform: rotate(-45deg);
+
+  }
+
+  
+  .discount-ribbon-screen p{
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+  }

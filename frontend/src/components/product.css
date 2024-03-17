@@ -1,0 +1,236 @@
+
+
+
+.card-container {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 7px;
+  width: 209px;
+  margin-bottom: 1.5em;
+  box-shadow: 3px 3px 5px #bde7bd;
+  transition: transform 0.2s ease-in-out;
+  max-height: 500px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: left; /* Center-align the content horizontally */
+  background: #ffffff;
+  max-width: 100%;
+}
+
+/* Add any additional styling you prefer */
+.card-container .cardHeading {
+  display: inline-block;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  color:#800020;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.card-container p {
+  font-size: x-small;
+  color: #996515;
+  text-align: justify;
+  margin: 1%;
+  padding-top: 0px;
+  padding-bottom: 5px;
+  border: 0px;
+  margin-top: 0px;
+}
+
+.card-container div span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #996515;
+  margin: 0px;
+  border: 0px;
+}
+
+.card-container div span span {
+  font-size: 14px;
+  font-weight: 500;
+  color: forestgreen;
+  margin: 0px;
+  border: 0px;
+}
+
+s{
+  color: red;
+  font-size: medium;
+  font-weight: 600;
+}
+
+.card-container .cardHeading:hover {
+  color: #996515;
+}
+
+.card-container:hover {
+  transform: scale(1.05);
+  box-shadow: 2px 1px 2px forestgreen;
+}
+
+/* Add this CSS to your existing styles */
+.card-container .d-flex {
+  flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+}
+
+.card-container p {
+  font-size: small; /* Adjust font size as needed */
+}
+
+.image-container {
+  display: flex;
+  scroll-snap-type: x mandatory;
+  position: relative;
+  border-radius: 5px;
+  border: 2px solid lightgray;
+  overflow: hidden; /* Hide the scrollbar */
+  white-space: nowrap; /* Prevent wrapping */
+  
+}
+
+.image-container image{
+   display: inline-block; /* Display images in a line */
+  margin-right: 10px; /* Add margin between images */
+}
+
+.image-item {
+  flex: 0 0 auto;
+  width: 100%;
+  scroll-snap-align: start;
+  position: relative;
+}
+
+.image-item img {
+  max-width: 100%;
+  max-height: 100%; /* Set the maximum height to 100% of the container */
+  height: auto;
+}
+
+.scroll-buttons-container {
+  position: absolute;
+  overflow: hidden;
+  right: 5px;
+  top:15px;
+  width: 45px; /* Adjust the width as needed */
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  z-index: 1; /* Ensure the buttons appear above the image */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-container:hover .scroll-buttons-container {
+  opacity: 1; /* Show on hover */
+}
+
+.scroll-button {
+  background-color: #996515;
+  border: 1.5px solid #ddd;
+  border-radius: 15%;
+  font-size: xx-small;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: #ddd;
+}
+
+.scroll-button:hover {
+  transform: scale(1.05);
+}
+
+/* Add modern styles for labels */
+.card-container label {
+  font-size: 14px;
+  font-weight: 500;
+  color: forestgreen;
+  margin-bottom: 5px;
+  justify-content: left;
+  margin-right: 5px;
+}
+
+/* Add modern styles for brandDropdown */
+.card-container select {
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 4px;
+  border: 1px solid lightgray;
+  color: #996515;
+  transition: border-color 0.3s ease;
+}
+
+.card-container select option {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.card-container select:hover,
+.card-container select:focus {
+  border-color: forestgreen; /* Highlight border color on hover/focus */
+  /* Remove default outline */
+  transform: translateY(-1px);
+  color: forestgreen;
+}
+
+
+.discount-ribbon {
+  position: absolute;
+  top: 20px;
+  left: 0px;
+  background-color: forestgreen; /* A shade of orange, adjust as needed */
+   /* Text color */
+  border-radius: 4px;
+  z-index: 2; /* Ensure the ribbon appears above the image */
+  display: flex;
+  align-items: center;
+  width: 35%;
+  justify-content: center;
+  transform: rotate(-45deg);
+  
+}
+.discount-ribbon p{
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+body {
+  background-color:  #f5fff5;/* Light green color, adjust as needed */
+}
+
+.cart-button {
+  background-color: white; /* Green background color */
+  width: 75%;
+  color: #550014; /* White text color */
+   /* Padding around the text */
+  border: 1.5px solid #550014; /* Remove border */
+  border-radius: 4px; /* Add some border-radius for rounded corners */
+  cursor: pointer; /* Show pointer cursor on hover */
+  font-size: 12px; /* Adjust font size */
+  font-weight: 500;
+  transition: background-color 0.3s ease; /* Smooth transition for background color change */
+ margin-left: 20px;
+}
+
+/* Hover effect */
+.cart-button:hover {
+  background-color: yellowgreen; /* Darker green on hover */
+}
+
+/* Disabled state */
+.cart-button:disabled {
+  background-color: #cccccc; /* Light gray for disabled state */
+  cursor: not-allowed; /* Disable pointer cursor */
+}
+
+/* Icon styles (assuming you have an icon for the cart) */
+.cart-button i {
+  margin-right: 8px; /* Add some spacing between text and icon */
+}

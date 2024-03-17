@@ -1,0 +1,168 @@
+.contact-item {
+    display: flex;
+    /* align-self: center; */
+    flex-direction: column;
+    align-items: flex-start;
+    /* margin-right: 20px; */
+    margin: auto;
+    color: floralwhite;
+    font-size: 20px;
+    font: small-caps;
+    /* font-weight: 500; */
+    background: linear-gradient(45deg, #1C6E3E, #05c90e);
+   
+  animation: changeGradient 30s infinite alternate; /* Animation to change gradient angle */
+    width: 60%;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 8px;
+    /* border: 2px solid #3e4934; */
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflowing content */
+  }
+  
+  .phone-icon,
+  .whatsapp-icon {
+    font-size: 20px;
+    margin-right: 15px;
+    color: floralwhite; /* Match the lighter color from the gradient */
+    animation: pulse 1.5s infinite; /* Pulse animation */
+   
+  }
+
+
+  @keyframes changeGradient {
+    0% {
+      background: linear-gradient(0deg, #05c90e, #1C6E3E);
+    }
+    3.33% {
+      background: linear-gradient(11.2deg, #08c512, #1b7140);
+    }
+    6.67% {
+      background: linear-gradient(22.5deg, #0aa912, #1a7a43);
+    }
+    10% {
+      background: linear-gradient(33.75deg, #0da114, #197b41);
+    }
+    13.33% {
+      background: linear-gradient(45deg, #0d6e12, #1a7841);
+    }
+    16.67% {
+      background: linear-gradient(56.25deg, #187b41, #0ca214);
+    }
+    20% {
+      background: linear-gradient(67.5deg, #1a7b43, #09b912);
+    }
+    23.33% {
+      background: linear-gradient(78.75deg, #1b7b43, #08ca12);
+    }
+    26.67% {
+      background: linear-gradient(90deg, #1c7b43, #07ca12);
+    }
+    30% {
+      background: linear-gradient(101.25deg, #1c7b43, #06ca12);
+    }
+    33.33% {
+      background: linear-gradient(112.5deg, #1c7b43, #05ca12);
+    }
+    36.67% {
+      background: linear-gradient(123.75deg, #1c7b43, #05ca13);
+    }
+    40% {
+      background: linear-gradient(135deg, #1c7b43, #05ca14);
+    }
+    43.33% {
+      background: linear-gradient(146.25deg, #1c7b43, #05ca15);
+    }
+    46.67% {
+      background: linear-gradient(157.5deg, #1c7b43, #05ca16);
+    }
+    50% {
+      background: linear-gradient(168.75deg, #1c7b43, #05ca17);
+    }
+    53.33% {
+      background: linear-gradient(180deg, #1c7b43, #05ca18);
+    }
+    56.67% {
+      background: linear-gradient(191.25deg, #1c7b43, #05ca19);
+    }
+    60% {
+      background: linear-gradient(202.5deg, #1c7b43, #05ca1a);
+    }
+    63.33% {
+      background: linear-gradient(213.75deg, #1c7b43, #05ca1b);
+    }
+    66.67% {
+      background: linear-gradient(225deg, #1c7b43, #05ca1c);
+    }
+    70% {
+      background: linear-gradient(236.25deg, #1c7b43, #05ca1d);
+    }
+    73.33% {
+      background: linear-gradient(247.5deg, #1c7b43, #05ca1e);
+    }
+    76.67% {
+      background: linear-gradient(258.75deg, #1c7b43, #05ca1f);
+    }
+    80% {
+      background: linear-gradient(270deg, #1c7b43, #05ca20);
+    }
+    83.33% {
+      background: linear-gradient(281.25deg, #1c7b43, #05ca21);
+    }
+    86.67% {
+      background: linear-gradient(292.5deg, #1c7b43, #05ca22);
+    }
+    90% {
+      background: linear-gradient(303.75deg, #1c7b43, #05ca23);
+    }
+    93.33% {
+      background: linear-gradient(315deg, #1c7b43, #05ca24);
+    }
+    96.67% {
+      background: linear-gradient(326.25deg, #1c7b43, #05ca25);
+    }
+    100% {
+      background: linear-gradient(337.5deg, #1c7b43, #05ca26);
+    }
+  }
+  
+      
+ 
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .whatsapp-text {
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap; /* Prevent text wrapping */
+    
+  }
+  
+  .whatsapp-text a {
+    text-decoration: none;
+    color: floralwhite;
+    font-size: 18px;
+    font: small-caps;
+    white-space: nowrap; /* Prevent text wrapping */
+    /* font-weight: 500; */
+  }
+  
+
+  @media (max-width: 400px) {
+ 
+    .contact-item{
+      margin-right: '70px';
+    }
+  }

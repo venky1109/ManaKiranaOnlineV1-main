@@ -1,0 +1,16 @@
+{
+    "name": "KinanaKottu",
+    "short_name": "KK",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "icons": [
+      {
+        "src": "FeviconManaKirana.ico",
+        "sizes": "32x26",
+        "type": "image/x-icon"
+      }
+    ]
+  }
+  

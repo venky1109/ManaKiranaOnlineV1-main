@@ -1,0 +1,107 @@
+.navbar {
+  position: fixed;
+  border-top: 5px solid forestgreen;
+  box-shadow: 0px -10px 50px #bde7bd;
+  height: fit-content;
+  background-color: white;
+  z-index: 99;
+  max-height: 100%;
+  /* width: 100%; Add this to ensure the navbar spans the full width */
+}
+
+#username {
+  font-size: 1.25em;
+  color: #1C6E3E;
+}
+
+.compNav {
+  color: #1C6E3E;
+  font-size: 30px;
+}
+
+.compNav:hover {
+  color: #B8860B; /* Gold color */
+}
+
+.logo-container {
+  position: relative;
+  width: 100px; /* Set the desired width */
+  height: auto; /* Maintain aspect ratio */
+  max-width: 100%;
+}
+
+.logo-image {
+  width: 100px; /* Set the desired width */
+  height: auto; /* Maintain aspect ratio */
+}
+
+@keyframes letterReveal {
+  from {
+      opacity: 0;
+      transform: translateY(100%);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.brand-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px; /* Set the desired font size */
+  font-weight: 700;
+  color: #996515; /* Set the text color as needed */
+  overflow: hidden; /* Hide overflow to make letters appear one by one */
+}
+
+.brand-letter {
+  display: inline-block;
+  opacity: 0;
+  animation: letterReveal 0.5s ease forwards; /* Adjust duration and easing as needed */
+}
+
+
+@media (max-width: 450px) {
+
+  
+ 
+  .logo-container {
+    width: 90px; /* Reduced width for smaller screens */
+  }
+ 
+  .logo-image {
+    width: 90px; /* Reduced width for smaller screens */
+  }
+
+  .brand-name {
+    font-size: 9px; /* Reduced font size for smaller screens */
+  }
+
+  .contact-us-banner {
+    order: -1; /* Move contact banner to the top */
+  }
+
+  .search-box {
+    order: 1; /* Move search box below contact banner */
+  }
+  
+  /* body .search-box {
+    display: none;
+  }
+  
+  body .toggle {
+    display: none;
+  }
+  
+  body:hover .search-box {
+    display: block;
+  }
+  
+  body:hover .toggle {
+    display: block;
+  } */
+
+}

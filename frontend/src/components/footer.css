@@ -1,0 +1,57 @@
+.footer {
+    background-color: #5F9E4F;
+    color: #ffffff  ;
+  }
+
+ .footer {
+    
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  box-shadow: 0px -10px 10px #bde7bd;
+  padding-top: 10px;
+ }
+
+
+ 
+ 
+  
+  .footer a {
+    font-size: 0.8em;
+    margin-right: 10px;
+    color: #ffffff;
+    text-decoration: none;
+  }
+  @media screen and (max-width: 600px) {
+    .footer {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .footer p {
+    font-size: 0.7em;
+    color:  #ffffff;
+    text-align: justify;
+
+  }
+
+.footer .social-icon {
+    font-size: 1.5em;
+    color: #ffffff; /* Blue color for social media icons */
+    padding-left: 0%;
+    padding-right: 0%;
+  }
+
+.footer:hover{
+    
+    box-shadow: 0px -10px 10px #bde7bd;
+}
+
+
+.footer a:hover{
+    text-decoration: underline;
+}
+
+.footer #ul:hover{
+    text-decoration: underline;
+}
