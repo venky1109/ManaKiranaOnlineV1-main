@@ -12142,3 +12142,32 @@ body:hover .toggle {
 
 }
 
+.search-container {
+  position: relative;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px; /* Adjust height as needed */
+  overflow-y: auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  padding: 0;
+  margin-top: 5px; /* Adjust margin as needed */
+  z-index: 999; /* Ensure it appears above other elements */
+}
+
+.suggestions-list li {
+  list-style-type: none;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.suggestions-list li:hover {
+  background-color: #f0f0f0;
+}
