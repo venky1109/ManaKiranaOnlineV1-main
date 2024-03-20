@@ -1,5 +1,6 @@
 import {Container, Row, Col ,Nav } from "react-bootstrap"
 import { TiSocialFacebook , TiSocialInstagram , TiSocialYoutubeCircular } from "react-icons/ti";
+import { FaSquareXTwitter } from "react-icons/fa6";
 import './footer.css'
 
 const Footer = () => {
@@ -22,19 +23,23 @@ const Footer = () => {
         <Col md={3}>
           <h6>Quick Links</h6>
           <ul className="list-unstyled">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#products">Products</a></li>
-            <li><a href="#cart">Cart</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/">Products</a></li>
+            <li><a href="/cart">Cart</a></li>
+           
+            {/* <li><a href="/contact">Contact</a></li> */}
           </ul>
         </Col>
         <Col md={3}>
           <h6>Follow Us</h6>
           {/* Add social media icons or links here */}
           <Nav>
-          <Nav.Link  className="social-icon"  href="https://www.facebook.com"><TiSocialFacebook /></Nav.Link>
-          <Nav.Link  className="social-icon"  href="https://www.facebook.com"><TiSocialInstagram /></Nav.Link>
-          <Nav.Link  className="social-icon"  href="https://www.youtube.com"><TiSocialYoutubeCircular /></Nav.Link>
+          
+          <Nav.Link  className="social-icon"  href="https://www.facebook.com/profile.php?id=61557084347066" target="_blank"><TiSocialFacebook /></Nav.Link>
+          <Nav.Link  className="social-icon"  href="https://www.instagram.com/manakirana8/" target="_blank"><TiSocialInstagram /></Nav.Link>
+          <Nav.Link  className="social-icon"  href="https://www.youtube.com" target="_blank"><TiSocialYoutubeCircular /></Nav.Link>
+          <Nav.Link className="social-icon"  href="https://twitter.com/manakirana8" target="_blank"><FaSquareXTwitter/></Nav.Link>
+          
           </Nav>
           
         </Col>
