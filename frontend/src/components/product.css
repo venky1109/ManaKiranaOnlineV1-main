@@ -277,11 +277,11 @@ body {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 45%; /* Adjust as needed */
-  max-width: 50%; /* Adjust as needed */
+  width: 50%; /* Adjust as needed */
+  max-width: 60%; /* Adjust as needed */
   background-color: white;
   overflow-y: auto; /* Enable vertical scrolling */
-  transition: transform 1.5s ease-in-out; /* Animation duration */
+  transition: transform 0.5s ease-in-out; /* Animation duration */
   transform: translateX(100%); /* Initially off-screen to the right */
   z-index: 99;
 }
