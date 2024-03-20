@@ -4,6 +4,11 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../slices/cartSlice';
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
+import { FaShoppingBag } from 'react-icons/fa';
+// import { useNavigate  } from 'react-router-dom';
+import Cart from './Cart'
+
+
 import './product.css';
 
 const Product = ({ product,keyword}) => {
@@ -12,7 +17,7 @@ const Product = ({ product,keyword}) => {
   const [selectedQuantity, setSelectedQuantity] = useState('');
   const [selectedQty, setSelectedQty] = useState(1);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
-  
+   
   const dispatch = useDispatch();
   // const navigate = useNavigate();
   const scrollContainersRef = useRef([]);
@@ -78,7 +83,11 @@ const Product = ({ product,keyword}) => {
   };
   
   const handleScroll = (scrollDirection, index) => {
+    // console.log('scrollContainersRef.current:', scrollContainersRef.current);
+    // console.log('index:', index);
+  
     const scrollContainer = scrollContainersRef.current[index];
+    // console.log('scrollContainer:', scrollContainer);
 
     if (scrollContainer) {
       const containerWidth = scrollContainer.clientWidth;
@@ -140,17 +149,23 @@ const Product = ({ product,keyword}) => {
     setIsAddedToCart(false);
   };
 
-  const handleQtyChange = (event) => {
-    setSelectedQty(event.target.value);
-    setIsAddedToCart(false);
-  };
-
+  const handleQtyChange = (newQty) => {
+    if (newQty >= 1 && newQty <= 9 ) {
+        setSelectedQty(newQty);
+        setIsAddedToCart(false);
+    }
+};
 
     const addToCartHandler = () => {
+      setIsAddedToCart(true);
+      setTimeout(() => {
+        setIsAddedToCart(false);
+      }, 5000);
       const selectedDetail = product.details.find((detail) => detail.brand === selectedBrand);
       const selectedFinancial = selectedDetail.financials.find(
         (financial) => financial.quantity.toString() === selectedQuantity
       );
+      
   
       dispatch(addToCart({
         name:product.name,
@@ -167,84 +182,150 @@ const Product = ({ product,keyword}) => {
         brandId:selectedDetail._id,
         countInStock:10
       }));
-      setIsAddedToCart(true);
+      
+      showCartScreen();
       // navigate('/cart');
     };
 
-  
+    const showCartScreen = () => {
+      const cartScreen = document.querySelector('.cart-screen');
+      // console.log('cartScreen'+cartScreen);
+      if(cartScreen)
+      {
+      cartScreen.classList.add('show'); 
+    }
+    };
+    
+    const hideCartScreen = () => {
+      const cartScreen = document.querySelector('.cart-screen');
+      if (cartScreen) {
+        cartScreen.classList.remove('show');
+      }
+    };
 
   return (
-    <Container style={{ width: '270px' }}>
+    <Container >
       {product.details.map((detail, detailIndex) => (
         (!selectedBrand || detail.brand === selectedBrand) && (
           <div key={detailIndex} className="card-container">
             {/* Render images with scroll buttons */}
-            <Link to={`/product/${product._id}`} state={{brand: selectedBrand, quantity: selectedQuantity ,qty:selectedQty }}>
-              <div className="image-container" ref={(el) => (scrollContainersRef.current[detailIndex] = el)}>
-                {detail.images && detail.images.map((image, imageIndex) => (
-                  <div key={imageIndex}>
-                    <img src={image.image} width={190} height={200} alt={`${product.name}`} />
-                  </div>
-                ))}
-              </div>
-            </Link>
-            <h6 className="cardHeading">{product.name}</h6>
+            <Link to={`/product/${product._id}`} state={{ brand: selectedBrand, quantity: selectedQuantity, qty: selectedQty }}>
+      <div className="image-container" ref={(el) => (scrollContainersRef.current[detailIndex] = el)}>
+    
+        <div className="images-wrapper">
+          {detail.images && detail.images.map((image, imageIndex) => (
+            <img key={imageIndex} src={image.image} width='100%' height='auto' alt={`${product.name}`} />
+          ))}
+        </div>
+        
+      </div>
+      
+    </Link>
+   
+    <div className="quantity-wrap">
+    <button className="quantity-button" onClick={() => handleQtyChange(selectedQty - 1)}>-</button>
+    {selectedQty}
+<button className="quantity-button" onClick={() => handleQtyChange(selectedQty + 1)}>+</button>
+<button
+  className="cart-button"
+  onClick={addToCartHandler}
+>
+  {isAddedToCart ? 'ITEM ADDED  ' : 'ADD TO CART'}
+  {isAddedToCart && <FaShoppingBag />}
+  {/* Render the cart screen conditionally */}
 
-            {/* Brand selection dropdown inside the card */}
-            <div>
-              <label htmlFor={`brandDropdown-${detailIndex}`}>Brand:</label>
-              <select id={`brandDropdown-${detailIndex}`} onChange={handleBrandChange} value={selectedBrand}>
-                {product.details.map((detail) => (
-                  <option key={detail.brand} value={detail.brand}>
-                    {detail.brand}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label htmlFor={`weightDropdown-${detailIndex}`}>Weight:</label>
-              <select
-                id={`weightDropdown-${detailIndex}`}
-                onChange={handleQuantityChange}
-                value={selectedQuantity}
-              >
-                {detail.financials.map((financial, index) => (
-                  <option key={index} value={financial.quantity}>
-                     {getFormattedQuantity(financial.quantity)}
-                  </option>
-                ))}
-              </select>
+</button>
+  {/* Render the cart screen conditionally */}
+
+  {/* {console.log('isAddedToCart'+isAddedToCart)} */}
+  {
+        <div className="cart-screen">
+          <button  onClick={hideCartScreen} style={{backgroundColor:'forestgreen',color:'white',fontSize:'1.5rem',borderRadius:'5px'}}>Close</button>
+         <div >
+          <Cart />
+          </div>
+        </div>
+      }
+ 
+</div>
+<div >
+  <div>
+    <p className="cardHeading">{product.name}</p>
+  </div>
+
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div style={{ marginRight: '1rem' }}>
+      <label htmlFor={`brandDropdown-${detailIndex}`} className="brand-label">Brand</label>
+    </div>
+    <div>
+      <select id={`brandDropdown-${detailIndex}`} onChange={handleBrandChange} value={selectedBrand}  style={{ width: '100%' }}>
+        {product.details.map((detail) => (
+          <option key={detail.brand} value={detail.brand}>
+            {detail.brand}
+          </option>
+        ))}
+      </select>
+    </div>
+  </div>
+
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div style={{ marginRight: '1rem' }}>
+      <label htmlFor={`weightDropdown-${detailIndex}`}>Weight</label>
+    </div>
+    <div>
+      <select
+        id={`weightDropdown-${detailIndex}`}
+        onChange={handleQuantityChange}
+        value={selectedQuantity}
+      >
+        {detail.financials.map((financial, index) => (
+          <option key={index} value={financial.quantity}>
+            {getFormattedQuantity(financial.quantity)}
+          </option>
+        ))}
+      </select>
+    </div>
+  </div>
+
+  {/* Display price and discount based on selected quantity */}
+  {selectedQuantity && getDiscount(selectedQuantity, detail.financials) > 0 && (
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{ marginRight: '1rem', fontSize: 'medium', fontWeight: 600 }}>
+        <span>Price/Pack</span>
+      </div>
+      <div style={{ fontSize: 'medium', fontWeight: 600 }}>
+        <s>&#x20b9;{(getPrice(selectedQuantity, detail.financials)).toFixed(2)}</s> &#x20b9;{(getDprice(selectedQuantity, detail.financials)).toFixed(2)}
+      </div>
+    </div>
+  )}
+
+  {selectedQuantity && getDiscount(selectedQuantity, detail.financials) <= 0 && (
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{ marginRight: '1rem', fontSize: 'medium', fontWeight: 600 }}>
+        <span>Price/Pack:</span>
+      </div>
+      <div style={{ fontSize: 'medium', fontWeight: 600 }}>
+        &#x20b9;{(getPrice(selectedQuantity, detail.financials)).toFixed(2)}
+      </div>
+    </div>
+  )}
+
+  {selectedQuantity && selectedQty > 1 && getDiscount(selectedQuantity, detail.financials) > 0 && (
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{ marginRight: '1rem', fontSize: 'medium', fontWeight: 600 }}>
+        <span>Price of {selectedQty} packs:</span>
+      </div>
+      <div style={{ fontSize: 'medium', fontWeight: 600 }}>
+        <s>&#x20b9;{(getPrice(selectedQuantity, detail.financials) * selectedQty).toFixed(2)}</s> &#x20b9;{(getDprice(selectedQuantity, detail.financials) * selectedQty).toFixed(2)}
+      </div>
+    </div>
+  )}
+</div>
+
+          
+          
+
               
-              <label htmlFor={`quantityDropdown-${detailIndex}`}>Number Of Packs:</label>
-              <select
-                id={`quantityDropdown-${detailIndex}`}
-                onChange={handleQtyChange}
-                value={selectedQty}
-              >
-                {[...Array(10).keys()].map((x) => (
-                        <option key={x + 1} value={x + 1}>
-                          {x + 1}
-                        </option>
-                      ))}
-              </select>
-              <br />
-              {/* Display price and discount based on selected quantity */}
-              {selectedQuantity && getDiscount(selectedQuantity, detail.financials) > 0 && (
-                <span>
-                  <span>Price/Pack:</span> <s>&#x20b9;{(getPrice(selectedQuantity, detail.financials)).toFixed(2)}</s> &#x20b9;{(getDprice(selectedQuantity,detail.financials)).toFixed(2)} 
-                  </span>
-              )}
-              {selectedQuantity && getDiscount(selectedQuantity, detail.financials) <= 0 && (
-                <span>
-                  <span>Price/Pack:</span> &#x20b9;{(getPrice(selectedQuantity, detail.financials)).toFixed(2)}
-                  </span>
-              )}
-              <br/>
-                 {selectedQuantity && selectedQty > 1 && getDiscount(selectedQuantity, detail.financials) > 0 && (
-                <span>
-                  <span> Price of {selectedQty} packs:</span> <s>&#x20b9;{(getPrice(selectedQuantity, detail.financials) * selectedQty).toFixed(2)}</s> &#x20b9;{(getDprice(selectedQuantity,detail.financials) * selectedQty).toFixed(2)} 
-                  </span>
-              )}
               {selectedQuantity && selectedQty > 1  && getDiscount(selectedQuantity, detail.financials) <= 0 && (
                 <span>
                   <span> Price of {selectedQty} packs:</span> &#x20b9;{(getPrice(selectedQuantity, detail.financials) * selectedQty).toFixed(2)}
@@ -252,14 +333,12 @@ const Product = ({ product,keyword}) => {
               )}
                {selectedQuantity && getDiscount(selectedQuantity, detail.financials) > 0 && (
                 <span className='discount-ribbon' >
-                  <p>{getDiscount(selectedQuantity,detail.financials)}% off</p>
+                  <p >{getDiscount(selectedQuantity,detail.financials)}% off</p>
                   </span>
               )} 
-
-              <button className={`cart-button ${isAddedToCart ? 'added-to-cart' : ''}`}  onClick={addToCartHandler}>
-              {isAddedToCart ? 'ADDED!' : 'ADD TO CART'}
-              </button>
-            </div>
+            
+          
+            
             {/* Scroll buttons */}
             <div className="scroll-buttons-container">
               <button className="scroll-button" onClick={() => handleScroll('left', detailIndex)}>

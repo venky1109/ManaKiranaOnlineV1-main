@@ -5,11 +5,12 @@
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 7px;
-  width: 209px;
+  margin-left: 7px;
+  width: calc(100% - 10px); /* Adjust the percentage as needed */
   margin-bottom: 1.5em;
   box-shadow: 3px 3px 5px #bde7bd;
   transition: transform 0.2s ease-in-out;
-  max-height: 500px;
+  height: auto;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -34,8 +35,8 @@
 }
 
 .card-container p {
-  font-size: x-small;
-  color: #996515;
+  font-size: medium;
+  color: forestgreen;
   text-align: justify;
   margin: 1%;
   padding-top: 0px;
@@ -45,34 +46,36 @@
 }
 
 .card-container div span {
-  font-size: 14px;
-  font-weight: 500;
-  color: #996515;
-  margin: 0px;
-  border: 0px;
-}
 
-.card-container div span span {
-  font-size: 14px;
-  font-weight: 500;
   color: forestgreen;
   margin: 0px;
   border: 0px;
 }
 
+.card-container div span span {
+
+  color: forestgreen;
+  margin: 0px;
+  border: 0px;
+  
+}
+
 s{
-  color: red;
+  color: #800020;
   font-size: medium;
   font-weight: 600;
 }
 
-.card-container .cardHeading:hover {
+/* .card-container .cardHeading:hover {
   color: #996515;
+} */
+
+.images-wrapper img {
+  transition: transform 2s ease; /* Add a transition for smooth animation */
 }
 
-.card-container:hover {
-  transform: scale(1.05);
-  box-shadow: 2px 1px 2px forestgreen;
+.images-wrapper img:hover {
+  transform: scale(1.5); /* Scale the image to 110% on hover */
 }
 
 /* Add this CSS to your existing styles */
@@ -81,23 +84,25 @@ s{
 }
 
 .card-container p {
-  font-size: small; /* Adjust font size as needed */
+  font-size: medium; /* Adjust font size as needed */
 }
 
 .image-container {
   display: flex;
   scroll-snap-type: x mandatory;
   position: relative;
-  border-radius: 5px;
-  border: 2px solid lightgray;
+  /* border-radius: 5px;
+  border: 2px solid lightgray; */
   overflow: hidden; /* Hide the scrollbar */
   white-space: nowrap; /* Prevent wrapping */
+  border-top-left-radius: 5px; 
+  border-top-right-radius: 5px ;
   
 }
 
 .image-container image{
    display: inline-block; /* Display images in a line */
-  margin-right: 10px; /* Add margin between images */
+  /* margin-right: 10px;  */
 }
 
 .image-item {
@@ -116,8 +121,9 @@ s{
 .scroll-buttons-container {
   position: absolute;
   overflow: hidden;
+  border-radius: 5px;
   right: 5px;
-  top:15px;
+  top:10px;
   width: 45px; /* Adjust the width as needed */
   height: 100%;
   display: flex;
@@ -133,7 +139,7 @@ s{
 }
 
 .scroll-button {
-  background-color: #996515;
+  background-color: forestgreen;
   border: 1.5px solid #ddd;
   border-radius: 15%;
   font-size: xx-small;
@@ -143,33 +149,39 @@ s{
   color: #ddd;
 }
 
+
+
 .scroll-button:hover {
-  transform: scale(1.05);
+  background-color: darkgreen;
 }
 
 /* Add modern styles for labels */
 .card-container label {
-  font-size: 14px;
+  font-size: medium;
   font-weight: 500;
   color: forestgreen;
   margin-bottom: 5px;
-  justify-content: left;
-  margin-right: 5px;
+  justify-content: center;
+  /* margin-right: 5px; */
 }
 
 /* Add modern styles for brandDropdown */
 .card-container select {
-  font-size: 12px;
+  font-size: medium;
   font-weight: 500;
   border-radius: 4px;
   border: 1px solid lightgray;
-  color: #996515;
+  color: #800020;
   transition: border-color 0.3s ease;
+ 
+  
+
 }
 
 .card-container select option {
   font-size: 12px;
   font-weight: 600;
+  
 }
 
 .card-container select:hover,
@@ -183,17 +195,18 @@ s{
 
 .discount-ribbon {
   position: absolute;
-  top: 20px;
-  left: 0px;
+  top: 10px;
+  left: 10px;
   background-color: forestgreen; /* A shade of orange, adjust as needed */
    /* Text color */
   border-radius: 4px;
   z-index: 2; /* Ensure the ribbon appears above the image */
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  /* justify-content: center; */
   width: 35%;
   justify-content: center;
-  transform: rotate(-45deg);
+ 
   
 }
 .discount-ribbon p{
@@ -205,32 +218,77 @@ body {
   background-color:  #f5fff5;/* Light green color, adjust as needed */
 }
 
+
+.quantity-wrap {
+  background-color: forestgreen;
+  display: inline-flex; /* Ensure elements are displayed in one line */
+  align-items: center; /* Align items vertically */
+  color: white;
+  font-size: medium;
+  font-weight: 600;
+  padding: 0 5px; 
+  width:100%;
+  border-bottom-left-radius: 5px; 
+  border-bottom-right-radius: 5px ;
+}
+
+.quantity-button {
+  background-color: forestgreen;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
 .cart-button {
-  background-color: white; /* Green background color */
-  width: 75%;
-  color: #550014; /* White text color */
-   /* Padding around the text */
-  border: 1.5px solid #550014; /* Remove border */
-  border-radius: 4px; /* Add some border-radius for rounded corners */
-  cursor: pointer; /* Show pointer cursor on hover */
-  font-size: 12px; /* Adjust font size */
-  font-weight: 500;
-  transition: background-color 0.3s ease; /* Smooth transition for background color change */
- margin-left: 20px;
+  background-color: forestgreen;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  /* margin-left: auto; Push the cart button to the right */
 }
 
-/* Hover effect */
+
 .cart-button:hover {
-  background-color: yellowgreen; /* Darker green on hover */
+  background-color: darkgreen;
 }
 
-/* Disabled state */
-.cart-button:disabled {
-  background-color: #cccccc; /* Light gray for disabled state */
-  cursor: not-allowed; /* Disable pointer cursor */
+.quantity-button:hover {
+  background-color: darkgreen;
 }
-
-/* Icon styles (assuming you have an icon for the cart) */
 .cart-button i {
-  margin-right: 8px; /* Add some spacing between text and icon */
+  font-size: 1.5rem; /* Adjust the size of the icon */
+  margin-right: 5px; /* Add margin between the icon and the button edge */
+  display: none; /* Hide the icon by default */
 }
+
+.cart-button:hover i {
+  display: inline-block; /* Display the icon on hover */
+}
+
+
+.cart-screen {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 45%; /* Adjust as needed */
+  max-width: 50%; /* Adjust as needed */
+  background-color: white;
+  overflow-y: auto; /* Enable vertical scrolling */
+  transition: transform 1.5s ease-in-out; /* Animation duration */
+  transform: translateX(100%); /* Initially off-screen to the right */
+  z-index: 99;
+}
+.cart-screen::-webkit-scrollbar {
+  display: none;
+}
+.cart-screen.show {
+  transform: translateX(0); /* Slide in from the right */
+}
+

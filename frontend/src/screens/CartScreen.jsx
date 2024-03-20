@@ -13,6 +13,7 @@ import { FaTrash } from 'react-icons/fa';
 import Message from '../components/Message';
 import { addToCart, removeFromCart } from '../slices/cartSlice';
 
+
 const CartScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -108,7 +109,7 @@ const CartScreen = () => {
             <ListGroup.Item>
               <h5>
                 Subtotal of ({cartItems.length})
-                items :  {cartItems
+                items : &#x20b9; {cartItems
                 .reduce((acc, item) => acc +  (item.dprice * item.qty), 0)
                 .toFixed(2)}
               </h5>

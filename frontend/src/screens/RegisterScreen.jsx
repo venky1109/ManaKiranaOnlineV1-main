@@ -96,7 +96,7 @@ const RegisterScreen = () => {
   const sendOTP = async() => {
     try{
       
-      console.log(ph+'name '+name)
+      // console.log(ph+'name '+name)
       if (ph && name) {
         // Disable the button
         setButtonDisabled(true);
@@ -168,7 +168,7 @@ const RegisterScreen = () => {
       try {
  
         const res = await register({ name, phoneNo:ph.slice(2), password }).unwrap();
-        console.log('res'+res )
+        // console.log('res'+res )
         dispatch(setCredentials({ ...res }));
         navigate(redirect);
       } catch (err) {
