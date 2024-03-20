@@ -31,7 +31,7 @@ const PlaceOrderScreen = () => {
       const res = await createOrder({
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
-        paymentMethod: cart.paymentMethod,
+        paymentMethod: 'Cash Or UPI',
         itemsPrice: cart.itemsPrice,
         shippingPrice: cart.shippingPrice,
          //taxPrice: cart.taxPrice,
@@ -64,7 +64,7 @@ const PlaceOrderScreen = () => {
             <ListGroup.Item>
               <h2>Payment Method</h2>
               <strong>Method: </strong>
-              {cart.paymentMethod}
+              Cash/UPI On Delivery
             </ListGroup.Item>
 
             <ListGroup.Item>

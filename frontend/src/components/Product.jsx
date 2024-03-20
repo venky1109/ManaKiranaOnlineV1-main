@@ -214,7 +214,7 @@ const Product = ({ product,keyword}) => {
     
         <div className="images-wrapper">
           {detail.images && detail.images.map((image, imageIndex) => (
-            <img key={imageIndex} src={image.image} width='100%' height='auto' alt={`${product.name}`} />
+            <img key={imageIndex} src={image.image} width='100%' height='250px' alt={`${product.name}`} />
           ))}
         </div>
         

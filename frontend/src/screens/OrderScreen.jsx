@@ -131,7 +131,7 @@ const OrderScreen = () => {
                   Delivered on {order.deliveredAt}
                 </Message>
               ) : (
-                <Message variant='danger'>Not Delivered</Message>
+                <Message variant='info'><b>Order Successfully Placed and Delivery In Progress</b></Message>
               )}
             </ListGroup.Item>
 
@@ -144,7 +144,7 @@ const OrderScreen = () => {
               {order.isPaid ? (
                 <Message variant='success'>Paid on {order.paidAt}</Message>
               ) : (
-                <Message variant='danger'>Not Paid</Message>
+                <Message variant='info' ><b>Please Pay Amount of <span style={{ color:'brown'}} >&#x20b9;{order.totalPrice}</span> at Delivery time</b></Message>
               )}
             </ListGroup.Item>
 
