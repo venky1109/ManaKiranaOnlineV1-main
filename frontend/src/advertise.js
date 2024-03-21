@@ -4,7 +4,6 @@ const advertise=[
       "type": "BodyBanner",
       "images": [
         { "image": "/images/BodyBannerDryfruits.jpg" },
-        { "image": "./images/BodyBannerPulses.jpg" },
         { "image": "./images/BodyBannerSpices.jpg" }
       ],
       "dimensions": {

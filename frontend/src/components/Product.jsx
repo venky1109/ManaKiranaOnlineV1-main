@@ -202,8 +202,7 @@ const Product = ({ product,keyword}) => {
         cartScreen.classList.remove('show');
       }
     };
-
-  return (
+     return (
     <Container >
       {product.details.map((detail, detailIndex) => (
         (!selectedBrand || detail.brand === selectedBrand) && (

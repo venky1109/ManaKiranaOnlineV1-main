@@ -14,7 +14,7 @@ const getProducts = asyncHandler(async (req, res) => {
           $regex: req.query.keyword,
           $options: 'i',
         }} ,
-        // {category: { $regex: req.query.keyword, $options: 'i', }},
+        {category: { $regex: req.query.keyword, $options: 'i', }},
         {'details.brand': {$regex:req.query.keyword,$options: 'i', }},
       ],
       }

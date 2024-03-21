@@ -9,6 +9,7 @@ import Paginate from '../components/Paginate';
 import Meta from '../components/Meta';
 import AdvertisingBanner from '../components/Advertise';
 import advertise from '../advertise';
+import Category from '../components/Category';
 
 const HomeScreen = () => {
   const { pageNumber, keyword } = useParams();
@@ -17,7 +18,9 @@ const HomeScreen = () => {
     keyword,
     pageNumber,
   });
-
+  const getCategories = () => {
+    return  [...new Set(data.products.map(product => product.category))];
+  }
   return (
     <>
       {!keyword ? (
@@ -35,7 +38,11 @@ const HomeScreen = () => {
         </Message>
       ) : (
         <>
+        
+       
           <Meta />
+          <h3>Our Category Of Items</h3>
+          <Category categories={getCategories()}/>
           <h3>Our Grocery Items</h3>
           <Row>
             {data.products.map((product) => (

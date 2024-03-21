@@ -48,14 +48,14 @@
 .card-container div span {
 
   color: forestgreen;
-  margin: 0px;
+  margin: 0.25px;
   border: 0px;
 }
 
 .card-container div span span {
 
   color: forestgreen;
-  margin: 0px;
+  margin: 0.25px;
   border: 0px;
   
 }
@@ -88,7 +88,8 @@ s{
 }
 
 .image-container {
-  display: flex;
+  /* display: flex; */
+  display : flex 1;
   scroll-snap-type: x mandatory;
   position: relative;
   /* border-radius: 5px;

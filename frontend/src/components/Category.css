@@ -1,0 +1,56 @@
+.category-container {
+  display: flex;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
+.category-container::-webkit-scrollbar {
+  display: none;
+}
+.outline-success {
+  background-color: forestgreen;
+  padding: 1rem;
+  margin: 0.5rem;
+  width: 20%;
+  height: fit-content;
+  /* overflow-wrap; This property allows the content to break and wrap onto the next line */
+
+}
+
+.outline-success:hover {
+  background-color: brown; /* Color change on hover */
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .outline-success {
+    width: 50%; /* Adjusted width for smaller screens */
+  }
+}
+
+  
+  .category-button {
+    flex: 0 0 auto;
+    margin-right: 10px; /* Adjust as needed */
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+      margin-right: 10px; /* Adjust as needed */
+  }
+  
+  .category-button:hover {
+    background-color: #ddd;
+  }
+  
+
+  .category-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+  
+
+  
+ 
