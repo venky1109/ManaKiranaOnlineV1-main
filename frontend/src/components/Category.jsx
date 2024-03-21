@@ -8,7 +8,7 @@ const Category = ({ categories }) => {
   const containerRef = useRef(null);
   const scrollAmountRef = useRef(0);
   const scrollStep = 1;
-  const scrollSpeed = 10; // Adjust speed as needed
+  const scrollSpeed = 30; // Adjust speed as needed
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
