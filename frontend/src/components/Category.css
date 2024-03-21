@@ -11,7 +11,7 @@
   background-color: forestgreen;
   padding: 1rem;
   margin: 0.5rem;
-  width: 50%;
+  width: 20%;
   height: fit-content;
   /* overflow-wrap; This property allows the content to break and wrap onto the next line */
 
@@ -27,7 +27,20 @@
     width: 50%; 
   }
 } */
-
+@media screen and (max-width: 768px) {
+.category-container {
+  display: flex;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+.outline-success {
+  width: 50%; 
+}
+.category-wrapper {
+  position: relative;
+  overflow: auto;
+}
+}
   
   .category-button {
     flex: 0 0 auto;
