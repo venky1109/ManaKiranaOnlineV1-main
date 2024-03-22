@@ -142,13 +142,16 @@ const ProductScreen = () => {
           <div key={detailIndex} className="card-container-screen" >
             {/* Render images with scroll buttons */}  
             <Link to={`/product/${product._id}`} state={{brand: selectedBrand, quantity: selectedQuantity }}>
-              <div className="image-container" ref={(el) => (scrollContainersRef.current[detailIndex] = el)}>
-                {detail.images && detail.images.map((image, imageIndex) => (
-                  <div key={imageIndex}>
-                    <img src={image.image} width={300} height={350} alt={`${product.name}`} />
-                  </div>
-                ))}
-              </div>
+            <div className="image-container" ref={(el) => (scrollContainersRef.current[detailIndex] = el)}>
+    
+    <div className="images-wrapper">
+      {detail.images && detail.images.map((image, imageIndex) => (
+        <img key={imageIndex} src={image.image} width='100%' height='250px' alt={`${product.name}`} />
+      ))}
+    </div>
+    
+  </div>
+  
             </Link>
             <div className="scroll-buttons-container">
               <button className="scroll-button" onClick={() => handleScroll('left', detailIndex)}>
