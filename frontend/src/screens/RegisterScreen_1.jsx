@@ -51,7 +51,7 @@ const RegisterScreen = () => {
       toast.error('Passwords do not match');
     } else {
       try {
-        console.log('name'+name +'ph'+phoneNo +'pasword'+password)
+        // console.log('name'+name +'ph'+phoneNo +'pasword'+password)
         const res = await register({ name, phoneNo, password }).unwrap();
         dispatch(setCredentials({ ...res }));
         navigate(redirect);

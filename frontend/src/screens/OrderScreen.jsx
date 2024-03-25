@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { useSelector } from 'react-redux';
@@ -157,6 +157,7 @@ const OrderScreen = () => {
                   {order.orderItems.map((item, index) => (
                     <ListGroup.Item key={index}>
                       <Row>
+                        {/* {console.log(item)} */}
                         <Col md={1}>
                           <Image
                             src={item.image}
@@ -165,13 +166,19 @@ const OrderScreen = () => {
                             rounded
                           />
                         </Col>
-                        <Col>
-                          <Link to={`/product/${item.product}`}>
+                        <Col md={2}>
+                          {/* <Link to={`/product/${item.product}`}> */}
                             {item.name}
-                          </Link>
+                          {/* </Link> */}
                         </Col>
-                        <Col md={4}>
-                          {item.qty} x &#x20b9;{item.price} = &#x20b9;{item.qty * item.price}
+                        <Col md={1}>
+                          {item.quantity}
+                        </Col>
+                        <Col md={1}>
+                          {item.qty}
+                        </Col>
+                        <Col md={2}>
+                          &#x20b9;{item.price * item.qty}
                         </Col>
                       </Row>
                     </ListGroup.Item>

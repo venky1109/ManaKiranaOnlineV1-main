@@ -208,6 +208,7 @@ const Product = ({ product,keyword}) => {
         (!selectedBrand || detail.brand === selectedBrand) && (
           <div key={detailIndex} className="card-container">
             {/* Render images with scroll buttons */}
+            {/* {console.log('Value before calling toFixed():',detail)} */}
             <Link to={`/product/${product._id}`} state={{ brand: selectedBrand, quantity: selectedQuantity, qty: selectedQty }}>
       <div className="image-container" ref={(el) => (scrollContainersRef.current[detailIndex] = el)}>
     
@@ -304,6 +305,7 @@ const Product = ({ product,keyword}) => {
         <span>Price/Pack:</span>
       </div>
       <div style={{ fontSize: 'medium', fontWeight: 600 }}>
+      
         &#x20b9;{(getPrice(selectedQuantity, detail.financials)).toFixed(2)}
       </div>
     </div>

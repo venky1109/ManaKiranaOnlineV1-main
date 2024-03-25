@@ -1,0 +1,23 @@
+.category-container {
+  position: relative;
+  overflow-x: auto;
+}
+
+.scroll-button-left,
+.scroll-button-right {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.scroll-button-left {
+  left: 0;
+}
+
+.scroll-button-right {
+  right: 0;
+}

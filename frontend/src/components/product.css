@@ -6,7 +6,7 @@
   border-radius: 10px;
   padding: 7px;
   margin-left: 7px;
-  width: calc(100% - 10px); /* Adjust the percentage as needed */
+  width: 100%; /* Adjust the percentage as needed */
   margin-bottom: 1.5em;
   box-shadow: 3px 3px 5px #bde7bd;
   transition: transform 0.2s ease-in-out;
@@ -71,11 +71,11 @@ s{
 } */
 
 .images-wrapper img {
-  transition: transform 2s ease; /* Add a transition for smooth animation */
+  transition: transform 2.5s ease; /* Add a transition for smooth animation */
 }
 
 .images-wrapper img:hover {
-  transform: scale(1.5); /* Scale the image to 110% on hover */
+  transform: scale(1.25); /* Scale the image to 110% on hover */
 }
 
 /* Add this CSS to your existing styles */
