@@ -49,16 +49,15 @@ const HomeScreen = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        <>
+        < div >
           <Meta />
-          <h3>Our Category Of Items</h3>
           <Category categories={getCategories()} />
           {getCategories().map((category, index) => (
             <div key={category} >
-              <h3>{category}</h3>
-              <div style={{  position: 'relative' ,display: 'flex', alignItems: 'center' }}>
-              <Button className='scroll-button-left' style={{ position: 'absolute', top: '50%', left: '0', zIndex: '1' }} onClick={() => handleScroll(-100, index)}>Scroll Left</Button>
-              <div style={{ overflowX: 'auto', whiteSpace: 'nowrap' }} ref={(ref) => (containerRefs.current[index] = ref)}>
+              <h3 style={{marginTop:'1rem'}}>{category}</h3>
+              <div style={{  position: 'relative' ,display: 'flex', alignItems: 'center'}}>
+              <Button className='scroll-button-left' variant='success' style={{ borderRadius:'20%',fontWeight:'800',fontSize:'1.5rem',paddingLeft:'0.75rem',paddingRight:'0.75rem',paddingBottom:'0.25rem',paddingTop:'0.25rem' ,position: 'absolute', top: '45%%', left: '0', zIndex: '8' }} onClick={() => handleScroll(-100, index)}>&lt;</Button>
+              <div  style={{ overflowX: 'auto', whiteSpace: 'nowrap' }} ref={(ref) => (containerRefs.current[index] = ref)}>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   {data.products
                     .filter((product) => product.category === category)
@@ -68,7 +67,7 @@ const HomeScreen = () => {
                 </div>
               </div>
             
-                <Button  className='scroll-button-right'  style={{ position: 'absolute', top: '50%', right: '0', zIndex: '1' }}  onClick={() => handleScroll(100, index)}>Scroll Right</Button>
+                <Button  className='scroll-button-right' variant='success'  style={{ borderRadius:'20%',fontWeight:'800',fontSize:'1.5rem',paddingLeft:'0.75rem',paddingRight:'0.75rem' ,paddingBottom:'0.25rem',paddingTop:'0.25rem' ,position: 'absolute', top: '45%%', right: '0', zIndex: '1' }}  onClick={() => handleScroll(100, index)}>&gt;</Button>
               </div>
               
             </div>
@@ -78,7 +77,7 @@ const HomeScreen = () => {
             page={data.page}
             keyword={keyword ? keyword : ''}
           />
-        </>
+        </div>
       )}
     </>
   );

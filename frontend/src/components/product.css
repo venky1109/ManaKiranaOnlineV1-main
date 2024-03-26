@@ -171,7 +171,7 @@ s{
   font-size: medium;
   font-weight: 500;
   border-radius: 4px;
-  border: 1px solid lightgray;
+  border: 1px solid #800020;
   color: #800020;
   transition: border-color 0.3s ease;
  

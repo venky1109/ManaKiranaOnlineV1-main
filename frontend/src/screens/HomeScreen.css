@@ -1,7 +1,3 @@
-.category-container {
-  position: relative;
-  overflow-x: auto;
-}
 
 .scroll-button-left,
 .scroll-button-right {
@@ -11,7 +7,7 @@
   background-color: transparent;
   border: none;
   outline: none;
-  cursor: pointer;
+  cursor: pointer; 
 }
 
 .scroll-button-left {
@@ -21,3 +17,9 @@
 .scroll-button-right {
   right: 0;
 }
+
+
+
+
+
+

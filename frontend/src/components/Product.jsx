@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../slices/cartSlice';
 import { Link } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+import { Container  } from 'react-bootstrap';
 import { FaShoppingBag } from 'react-icons/fa';
 // import { useNavigate  } from 'react-router-dom';
 import Cart from './Cart'
@@ -255,10 +255,10 @@ const Product = ({ product,keyword}) => {
 
   <div style={{ display: 'flex', alignItems: 'center' }}>
     <div style={{ marginRight: '1rem' }}>
-      <label htmlFor={`brandDropdown-${detailIndex}`} className="brand-label">Brand</label>
+      <label htmlFor={`brandDropdown-${detailIndex}`} >Brand</label>
     </div>
     <div>
-      <select id={`brandDropdown-${detailIndex}`} onChange={handleBrandChange} value={selectedBrand}  style={{ width: '100%' }}>
+      <select id={`brandDropdown-${detailIndex}`}  onChange={handleBrandChange} value={selectedBrand}  style={{ width: '100%' }}>
         {product.details.map((detail) => (
           <option key={detail.brand} value={detail.brand}>
             {detail.brand}
