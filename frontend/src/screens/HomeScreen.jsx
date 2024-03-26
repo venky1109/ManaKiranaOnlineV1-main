@@ -54,10 +54,10 @@ const HomeScreen = () => {
           <h3>Our Category Of Items</h3>
           <Category categories={getCategories()} />
           {getCategories().map((category, index) => (
-            <div key={category}>
+            <div key={category} >
               <h3>{category}</h3>
-              <div>
-                <Button className='scroll-button-left' onClick={() => handleScroll(-100, index)}>Scroll Left</Button>
+              <div style={{  position: 'relative' ,display: 'flex', alignItems: 'center' }}>
+              <Button className='scroll-button-left' style={{ position: 'absolute', top: '50%', left: '0', zIndex: '1' }} onClick={() => handleScroll(-100, index)}>Scroll Left</Button>
               <div style={{ overflowX: 'auto', whiteSpace: 'nowrap' }} ref={(ref) => (containerRefs.current[index] = ref)}>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   {data.products
@@ -67,9 +67,10 @@ const HomeScreen = () => {
                     ))}
                 </div>
               </div>
-              
-                <Button  className='scroll-button-left' onClick={() => handleScroll(100, index)}>Scroll Right</Button>
+            
+                <Button  className='scroll-button-right'  style={{ position: 'absolute', top: '50%', right: '0', zIndex: '1' }}  onClick={() => handleScroll(100, index)}>Scroll Right</Button>
               </div>
+              
             </div>
           ))}
           <Paginate
