@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useGetProductsQuery } from '../slices/productsApiSlice';
 import Product from '../components/Product';
@@ -15,11 +15,19 @@ const HomeScreen = () => {
   const { pageNumber, keyword } = useParams();
   const adv = advertise.find(item => item.type === "BodyBanner");
   const containerRefs = useRef([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [categoriesPerPage] = useState(4); // Adjust as needed
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo(0, 0); // Scroll to top of the page
+  };
 
   const { data, isLoading, error } = useGetProductsQuery({
     keyword,
     pageNumber,
   });
+
+  // console.log(keyword+'xxx'+pageNumber);
 
   const getCategories = () => {
     if (!data || !data.products) return [];
@@ -33,11 +41,20 @@ const HomeScreen = () => {
     }
   };
 
+  // Pagination logic for categories
+  const indexOfLastCategory = currentPage * categoriesPerPage;
+  const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
+  const currentCategories = getCategories().slice(indexOfFirstCategory, indexOfLastCategory);
+  console.log('indexOfLastCategory'+indexOfLastCategory+'indexOfFirstCategory'+indexOfFirstCategory+'currentCategories'+currentCategories)
+
+
+
   return (
     <>
       {!keyword ? (
         <AdvertisingBanner images={adv.images} height={adv.dimensions.height} width={adv.dimensions.width} />
       ) : (
+        
         <Link to='/' className='btn btn-light mb-4'>
           Go Back
         </Link>
@@ -49,33 +66,31 @@ const HomeScreen = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        < div >
+        <div>
           <Meta />
           <Category categories={getCategories()} />
-          {getCategories().map((category, index) => (
-            <div key={category} >
-              <h3 style={{marginTop:'1rem'}}>{category}</h3>
-              <div style={{  position: 'relative' ,display: 'flex', alignItems: 'center'}}>
-              <Button className='scroll-button-left' variant='success' style={{ borderRadius:'20%',fontWeight:'800',fontSize:'1.5rem',paddingLeft:'0.75rem',paddingRight:'0.75rem',paddingBottom:'0.25rem',paddingTop:'0.25rem' ,position: 'absolute', top: '45%%', left: '0', zIndex: '8' }} onClick={() => handleScroll(-100, index)}>&lt;</Button>
-              <div  style={{ overflowX: 'auto', whiteSpace: 'nowrap' }} ref={(ref) => (containerRefs.current[index] = ref)}>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                  {data.products
-                    .filter((product) => product.category === category)
-                    .map((product) => (
-                      <Product key={product._id} product={product} keyword={keyword} />
-                    ))}
+          {currentCategories.map((category, index) => (
+            <div key={category}>
+              <h3 style={{ marginTop: '1rem' }}>{category}</h3>
+              <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                <Button className='scroll-button-left' variant='success' onClick={() => handleScroll(-100, index)}>&lt;</Button>
+                <div style={{ overflowX: 'auto', whiteSpace: 'nowrap' }} ref={(ref) => (containerRefs.current[index] = ref)}>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    {data.products
+                      .filter((product) => product.category === category)
+                      .map((product) => (
+                        <Product key={product._id} product={product} keyword={keyword} />
+                      ))}
+                  </div>
                 </div>
+                <Button className='scroll-button-right' variant='success' onClick={() => handleScroll(100, index)}>&gt;</Button>
               </div>
-            
-                <Button  className='scroll-button-right' variant='success'  style={{ borderRadius:'20%',fontWeight:'800',fontSize:'1.5rem',paddingLeft:'0.75rem',paddingRight:'0.75rem' ,paddingBottom:'0.25rem',paddingTop:'0.25rem' ,position: 'absolute', top: '45%%', right: '0', zIndex: '1' }}  onClick={() => handleScroll(100, index)}>&gt;</Button>
-              </div>
-              
             </div>
           ))}
           <Paginate
-            pages={data.pages}
-            page={data.page}
-            keyword={keyword ? keyword : ''}
+            pages={Math.ceil(getCategories().length / categoriesPerPage)}
+            page={currentPage}
+            paginate={paginate}
           />
         </div>
       )}
