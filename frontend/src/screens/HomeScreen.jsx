@@ -45,7 +45,7 @@ const HomeScreen = () => {
   const indexOfLastCategory = currentPage * categoriesPerPage;
   const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
   const currentCategories = getCategories().slice(indexOfFirstCategory, indexOfLastCategory);
-  console.log('indexOfLastCategory'+indexOfLastCategory+'indexOfFirstCategory'+indexOfFirstCategory+'currentCategories'+currentCategories)
+  // console.log('indexOfLastCategory'+indexOfLastCategory+'indexOfFirstCategory'+indexOfFirstCategory+'currentCategories'+currentCategories)
 
 
 
