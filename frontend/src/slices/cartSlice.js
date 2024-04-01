@@ -14,7 +14,8 @@ const cartSlice = createSlice({
       // in the cart
       const { user, rating, numReviews, reviews, ...item } = action.payload;
 
-      const existItem = state.cartItems.find((x) => x.productId === item.productId);
+      const existItem = state.cartItems.find((x) => x.productId === item.productId  &&  x.brand === item.brand &&
+      x.quantity === item.quantity );
 
       if (existItem) {
         state.cartItems = state.cartItems.map((x) =>

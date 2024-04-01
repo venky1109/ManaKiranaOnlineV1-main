@@ -165,6 +165,21 @@ const Product = ({ product,keyword}) => {
       const selectedFinancial = selectedDetail.financials.find(
         (financial) => financial.quantity.toString() === selectedQuantity
       );
+
+//       console.log(`Log Details:
+// - Product Name: ${product.name}
+// - Product ID: ${product._id}
+// - Category: ${product.category}
+// - Brand: ${selectedBrand}
+// - Quantity: ${selectedQuantity}
+// - Price: ${selectedFinancial.price}
+// - Discounted Price: ${selectedFinancial.dprice}
+// - Discount: ${selectedFinancial.Discount}
+// - Image: ${selectedDetail.images[0].image}
+// - Quantity Selected: ${selectedQty}
+// - Financial ID: ${selectedFinancial._id}
+// - Brand ID: ${selectedDetail._id}
+// - Count In Stock: 10`);
       
   
       dispatch(addToCart({
@@ -181,7 +196,8 @@ const Product = ({ product,keyword}) => {
         financialId:selectedFinancial._id,
         brandId:selectedDetail._id,
         countInStock:10
-      }));
+      })
+      );
       
       showCartScreen();
       // navigate('/cart');
