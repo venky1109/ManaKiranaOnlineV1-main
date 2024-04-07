@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect ,useRef} from 'react';
 import {  useParams } from 'react-router-dom';
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Message from '../components/Message';
+import PrintableOrderDetails from '../components/PrintableOrderDetails';
 import Loader from '../components/Loader';
 import {
   useDeliverOrderMutation,
@@ -100,7 +101,25 @@ const OrderScreen = () => {
     await deliverOrder(orderId);
     refetch();
   };
-
+  // const printOrderDetails = () => {
+  //   window.print();
+  // };
+  const isAdmin = userInfo && userInfo.isAdmin; 
+  const printableContentRef = useRef(null);
+  const printOrderDetails = () => {
+    const content = printableContentRef.current.innerHTML;
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>ManaKirana</title>
+        </head>
+        <body>${content}</body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+  };
   return isLoading ? (
     <Loader />
   ) : error ? (
@@ -154,8 +173,17 @@ const OrderScreen = () => {
                 <Message>Order is empty</Message>
               ) : (
                 <ListGroup variant='flush'>
+                  <Row>
+  <Col md={1}><strong>Image</strong></Col>
+  <Col md={3}><strong>Name</strong></Col>
+  <Col md={3}><strong>Brand</strong></Col>
+  <Col md={2}><strong>Quantity</strong></Col>
+  <Col md={1}><strong>Qty</strong></Col>
+  <Col md={2}><strong>Total Price</strong></Col>
+</Row>
                   {order.orderItems.map((item, index) => (
                     <ListGroup.Item key={index}>
+                      
                       <Row>
                         {/* {console.log(item)} */}
                         <Col md={1}>
@@ -166,12 +194,17 @@ const OrderScreen = () => {
                             rounded
                           />
                         </Col>
-                        <Col md={2}>
+                        <Col md={3}>
                           {/* <Link to={`/product/${item.product}`}> */}
                             {item.name}
                           {/* </Link> */}
                         </Col>
-                        <Col md={1}>
+                        <Col md={3}>
+                          {/* <Link to={`/product/${item.product}`}> */}
+                            {item.brand}
+                          {/* </Link> */}
+                        </Col>
+                        <Col md={2}>
                           {item.quantity}
                         </Col>
                         <Col md={1}>
@@ -217,6 +250,12 @@ const OrderScreen = () => {
                   <Col>Total</Col>
                   <Col>&#x20b9;{order.totalPrice}</Col>
                 </Row>
+                { isAdmin && (<Button onClick={printOrderDetails} className="mb-3">
+        Print Order Details
+      </Button>)}
+      <div ref={printableContentRef} style={{ display: 'none' }}>
+        <PrintableOrderDetails order={order} />
+      </div>
               </ListGroup.Item>
               {!order.isPaid && (
                 <ListGroup.Item>

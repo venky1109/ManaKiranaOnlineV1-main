@@ -38,7 +38,7 @@ const CartScreen = () => {
     
   
     if (!isNaN(quantity)) {
-      if (quantity >= 0 && quantity <= 50) {
+      if (quantity >= 0 && quantity <= 9) {
         return `${quantity} Kg`;
       } else {
         return `${quantity} grams`;

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,7 +27,7 @@ const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
   const placeOrderHandler = async () => {
     try {
-      // console.log(cart);
+      //  console.log(cart);
       const res = await createOrder({
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
@@ -37,7 +37,7 @@ const PlaceOrderScreen = () => {
          //taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
       }).unwrap();
-
+      // console.log(res);
       dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
     } catch (err) {
@@ -76,6 +76,14 @@ const PlaceOrderScreen = () => {
                   {cart.cartItems.map((item, index) => (
                     <ListGroup.Item key={index}>
                       <Row>
+  <Col md={1}><strong>Image</strong></Col>
+  <Col md={3}><strong>Name</strong></Col>
+  <Col md={3}><strong>Brand</strong></Col>
+  <Col md={2}><strong>Weight</strong></Col>
+  <Col md={1}><strong>Qty</strong></Col>
+  <Col md={2}><strong>Price</strong></Col>
+</Row>
+                      <Row>
                         <Col md={1}>
                           <Image
                             src={item.image}
@@ -84,18 +92,41 @@ const PlaceOrderScreen = () => {
                             rounded
                           />
                         </Col>
-                        <Col>
-                          <Link to={`/product/${item.product}`}>
+                        <Col md={3}>
+                          {/* <Link to={`/product/${item.product}`}> */}
                             {item.name}
-                          </Link>
+                          {/* </Link> */}
                         </Col>
-                        <Col md={4}>
-                          {item.qty} x  &#x20b9;{item.dprice} =  &#x20b9;
+                        <Col md={3}>
+                          {/* <Link to={`/product/${item.product}`}> */}
+                            {item.brand}
+                          {/* </Link> */}
+                        </Col>
+                        <Col md={2}>
+                          {item.quantity}
+                        </Col>
+                        <Col md={1}>
+                          {item.qty}
+                        </Col>
+                       
+                        <Col md={2}>
+                          
                           {(item.qty * (item.dprice * 100)) / 100}
                         </Col>
+                       
                       </Row>
                     </ListGroup.Item>
+                    
                   ))}
+                              {/* <ListGroup.Item>
+      <Button
+        type='button'
+        className='btn-block'
+        onClick={() => window.print()}
+      >
+        Print Invoice
+      </Button>
+    </ListGroup.Item> */}
                 </ListGroup>
               )}
             </ListGroup.Item>
@@ -147,6 +178,7 @@ const PlaceOrderScreen = () => {
                 </Button>
                 {isLoading && <Loader />}
               </ListGroup.Item>
+  
             </ListGroup>
           </Card>
         </Col>
