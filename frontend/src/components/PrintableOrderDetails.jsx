@@ -1,4 +1,5 @@
 import React from 'react';
+import logo from '../assets/ManaKiranaLogoWithName.png';
 // import { Button } from 'react-bootstrap';
 
 const PrintableOrderDetails = ({ order }) => {
@@ -14,28 +15,40 @@ const PrintableOrderDetails = ({ order }) => {
     <>
      
       <div id="printable-content">
-        <h2>Shipping Details</h2>
-        <p>
+      <div className="invoice-header" style={{ display: 'flex', alignItems: 'center' }}>
+  <img src={logo} alt="Mana Kirana Logo" className="logo" width="50" height="45" />
+  <div className="invoice-header" style={{ textAlign: 'right' }}>
+  <h2 className="invoice-title" style={{ margin: '0', padding: '0' }}>Mana Kirana</h2>
+  <p style={{ fontSize: '16px', margin: '0', padding: '0' }}><i><u>manakirana.online</u></i></p>
+</div>
+
+
+  </div>
+        <h4>InvoiceNumber:{order._id}</h4>
+      
+        <h3 style={{ margin: '0', padding: '0' }}><u>Shipping Details</u></h3>
+        <p style={{ margin: '0', padding: '0' }}>
           <strong>Name: </strong> {order.user.name}
         </p>
-        <p>
+        <p style={{ margin: '0', padding: '0' }}>
           <strong>Phone Number: </strong>{' '}
           <a href={`call to:${order.user.phoneNo}`}>{order.user.phoneNo}</a>
         </p>
-        <p>
+        <p style={{ margin: '0', padding: '0' }}>
           <strong>Address:</strong> {order.shippingAddress.address},{' '}
           {order.shippingAddress.city} {order.shippingAddress.postalCode},{' '}
           {order.shippingAddress.country}
         </p>
 
-        <h2>Order Items</h2>
+        <h3 style={{ marginBottom: '0', paddingBottom: '0' }}><u>Order Items</u></h3>
         <table className="order-items">
           <thead>
-            <tr>
+            <tr align="left">
               <th>Name</th>
-              <th>Brand</th>
-              <th>Quantity</th>
+              <th>ITEM TYPE/Brand Name</th>
+              <th>WEIGHT</th>
               <th>Qty</th>
+              <th>RATE</th>
               <th>Price</th>
             </tr>
           </thead>
@@ -44,13 +57,15 @@ const PrintableOrderDetails = ({ order }) => {
     <tr key={index}>
       <td>{item.name}</td>
       <td>{item.brand}</td>
-      <td>{item.quantity}</td>
+      {/* <td>{item.quantity}</td> */}
+      <td>{item.quantity > 9 ?  `${item.quantity} grams`:`${item.quantity}` }</td>
       <td>{item.qty}</td>
+      <td>{item.qty} x &#x20b9;{item.price} </td>
       <td>&#x20b9;{item.price * item.qty}</td>
     </tr>
   ))}
   <tr>
-    <td colSpan="4" align="right"><strong>Total:</strong></td>
+    <td colSpan="5" align="right"><strong>Total:</strong></td>
     <td>
       <strong>
         &#x20b9;{order.orderItems.reduce((total, item) => total + (item.price * item.qty), 0)}

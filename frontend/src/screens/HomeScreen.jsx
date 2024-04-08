@@ -7,7 +7,7 @@ import Message from '../components/Message';
 import Paginate from '../components/Paginate';
 import Meta from '../components/Meta';
 import AdvertisingBanner from '../components/Advertise';
-import Category from '../components/Category';
+// import Category from '../components/Category';
 import advertise from '../advertise';
 import { Button } from 'react-bootstrap';
 
@@ -68,7 +68,7 @@ const HomeScreen = () => {
       ) : (
         <div>
           <Meta />
-          <Category categories={getCategories()} />
+          {/* <Category categories={getCategories()} /> */}
           {currentCategories.map((category, index) => (
             <div key={category}>
               <h3 style={{ marginTop: '1rem' }}>{category}</h3>

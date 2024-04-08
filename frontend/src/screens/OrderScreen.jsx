@@ -104,7 +104,7 @@ const OrderScreen = () => {
   // const printOrderDetails = () => {
   //   window.print();
   // };
-  const isAdmin = userInfo && userInfo.isAdmin; 
+  
   const printableContentRef = useRef(null);
   const printOrderDetails = () => {
     const content = printableContentRef.current.innerHTML;
@@ -250,7 +250,7 @@ const OrderScreen = () => {
                   <Col>Total</Col>
                   <Col>&#x20b9;{order.totalPrice}</Col>
                 </Row>
-                { isAdmin && (<Button onClick={printOrderDetails} className="mb-3">
+                { userInfo && userInfo.isAdmin && (<Button onClick={printOrderDetails} className="mb-3">
         Print Order Details
       </Button>)}
       <div ref={printableContentRef} style={{ display: 'none' }}>
