@@ -58,7 +58,7 @@ const PrintableOrderDetails = ({ order }) => {
       <td>{item.name}</td>
       <td>{item.brand}</td>
       {/* <td>{item.quantity}</td> */}
-      <td>{item.quantity > 9 ?  `${item.quantity} grams`:`${item.quantity}` }</td>
+      <td>{item.quantity > 30 ?  `${item.quantity} grams`:`${item.quantity}` }</td>
       <td>{item.qty}</td>
       <td>{item.qty} x &#x20b9;{item.price} </td>
       <td>&#x20b9;{item.price * item.qty}</td>
@@ -68,7 +68,7 @@ const PrintableOrderDetails = ({ order }) => {
     <td colSpan="5" align="right"><strong>Total:</strong></td>
     <td>
       <strong>
-        &#x20b9;{order.orderItems.reduce((total, item) => total + (item.price * item.qty), 0)}
+      &#x20b9;{Math.round(order.orderItems.reduce((total, item) => total + (item.price * item.qty), 0))}
       </strong>
     </td>
   </tr>

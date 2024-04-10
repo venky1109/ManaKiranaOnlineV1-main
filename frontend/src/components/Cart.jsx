@@ -26,10 +26,10 @@ const Cart = () => {
       };
   const getFormattedQuantity = (quantity) => {
     if (!isNaN(quantity)) {
-      if (quantity >= 0 && quantity <= 50) {
-        return `${quantity} Kg`;
-      } else {
+      if (quantity > 30) {
         return `${quantity} grams`;
+        } else {
+        return `${quantity} Kg`;
       }
     }
   }
