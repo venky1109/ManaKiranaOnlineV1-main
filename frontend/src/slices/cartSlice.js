@@ -27,8 +27,27 @@ const cartSlice = createSlice({
 
       return updateCart(state, item);
     },
+    // removeFromCart: (state, action) => {
+    //   console.log(action.payload);
+    //   state.cartItems = state.cartItems.filter((x) => x.productId !== action.payload);
+    //   return updateCart(state);
+    // },
     removeFromCart: (state, action) => {
-      state.cartItems = state.cartItems.filter((x) => x.productId !== action.payload);
+      const { productId, brand, quantity } = action.payload;
+      console.log(action.payload);
+      console.log('before removal from cart '+state.cartItems);
+      
+      // Filter out the items that match the provided productId, brand, and 
+      console.log(quantity);
+      state.cartItems.forEach(item => {
+        console.log(`Item: ${item.productId} - Brand: ${item.brand} - Quantity: ${item.quantity}`);
+      });
+      state.cartItems = state.cartItems.filter((item) => {
+return !(item.productId === productId && item.brand === brand && item.quantity===quantity);
+      });
+      console.log('after removal from cart '+state.cartItems);
+      
+      // After filtering, update the cart state
       return updateCart(state);
     },
     saveShippingAddress: (state, action) => {

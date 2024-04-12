@@ -10,7 +10,7 @@ export const addDecimals = (num) => {
 export const updateCart = (state) => {
   // Calculate the items price in whole number (pennies) to avoid issues with
   // floating point number calculations
-
+console.log(state.cartItems);
   const itemsPrice = state.cartItems.reduce(
     (acc, item) => acc + (item.dprice * 100 * item.qty) / 100,
     0
@@ -31,6 +31,7 @@ export const updateCart = (state) => {
 
   // Save the cart to localStorage
   localStorage.setItem('cart', JSON.stringify(state));
+  console.log(state.cartItems);
 
   return state;
 };

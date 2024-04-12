@@ -58,7 +58,7 @@ const PrintableOrderDetails = ({ order }) => {
       <td>{item.name}</td>
       <td>{item.brand}</td>
       {/* <td>{item.quantity}</td> */}
-      <td>{item.quantity > 30 ?  `${item.quantity} grams`:`${item.quantity}` }</td>
+      <td>{item.quantity > 30 ?  `${item.quantity} grams`:`${item.quantity} kg` }</td>
       <td>{item.qty}</td>
       <td>{item.qty} x &#x20b9;{item.price} </td>
       <td>&#x20b9;{item.price * item.qty}</td>

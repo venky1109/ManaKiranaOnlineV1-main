@@ -27,8 +27,11 @@ const CartScreen = () => {
     dispatch(addToCart({ ...product, qty }));
   };
 
-  const removeFromCartHandler = (id) => {
-    dispatch(removeFromCart(id));
+  // const removeFromCartHandler = (id) => {
+  //   dispatch(removeFromCart(id));
+  // };
+  const removeFromCartHandler = (productId, brand, quantity) => {
+    dispatch(removeFromCart({ productId, brand, quantity }));
   };
 
   const checkoutHandler = () => {
@@ -92,7 +95,7 @@ const CartScreen = () => {
                     <Button
                       type='button'
                       variant='light'
-                      onClick={() => removeFromCartHandler(item.productId)}
+                      onClick={() => removeFromCartHandler(item.productId,item.brand,item.quantity)}
                     >
                       <FaTrash />
                     </Button>
