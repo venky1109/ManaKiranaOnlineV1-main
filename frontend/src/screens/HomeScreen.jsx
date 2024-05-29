@@ -16,7 +16,7 @@ const HomeScreen = () => {
   const adv = advertise.find(item => item.type === "BodyBanner");
   const containerRefs = useRef([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [categoriesPerPage] = useState(4); // Adjust as needed
+  const [categoriesPerPage] = useState(2); // Adjust as needed
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo(0, 0); // Scroll to top of the page
