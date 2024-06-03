@@ -29,10 +29,14 @@ const HomeScreen = () => {
 
   const loadMoreCategories = useCallback(() => {
     const allCategories = getCategories();
-    const startIndex = (currentPage - 1) * categoriesPerPage;
-    const endIndex = startIndex + categoriesPerPage;
-    const newCategories = allCategories.slice(startIndex, endIndex);
-    setCategories(prevCategories => [...new Set([...prevCategories, ...newCategories])]);
+    const newCategories = allCategories.slice(
+      (currentPage - 1) * categoriesPerPage,
+      currentPage * categoriesPerPage
+    );
+    setCategories(prevCategories => {
+      const combinedCategories = [...prevCategories, ...newCategories];
+      return [...new Set(combinedCategories)]; // Ensure no duplicate categories
+    });
   }, [getCategories, currentPage, categoriesPerPage]);
 
   useEffect(() => {
