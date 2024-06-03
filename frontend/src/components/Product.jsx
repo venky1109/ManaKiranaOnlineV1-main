@@ -375,20 +375,43 @@ const Product = ({ product,keyword}) => {
 export default Product;
 // Helper function to get price based on selected quantity
 const getPrice = (selectedQuantity, financials) => {
+  if (!financials || !Array.isArray(financials) || selectedQuantity == null) {
+    return 'N/A'; // Return 'N/A' if financials is not a valid array or selectedQuantity is null
+  }
 
-  const selectedFinancial = financials.find((financial) => financial.quantity.toString() === selectedQuantity);
-  // console.log(selectedQuantity+'   financials  '+financials+'  selectedFinancial  '+selectedFinancial)
-  return selectedFinancial ? selectedFinancial.price : 'N/A';
+  const selectedFinancial = financials.find((financial) =>
+    financial?.quantity?.toString() === selectedQuantity.toString()
+  );
+  const price = selectedFinancial ? selectedFinancial.price : null;
+  return typeof price === 'number' ? price : 'N/A'; // Safely handle null selectedFinancial
+  
 };
 
+
+
+// Helper function to get discounted price based on selected quantity
 const getDprice = (selectedQuantity, financials) => {
-  const selectedFinancial = financials.find((financial) => financial.quantity.toString() === selectedQuantity);
-  return selectedFinancial ? selectedFinancial.dprice : 0;
+  if (!financials || !Array.isArray(financials) || selectedQuantity == null) {
+    return 0; // Return 0 if financials is not a valid array or selectedQuantity is null
+  }
+
+  const selectedFinancial = financials.find((financial) =>
+    financial?.quantity?.toString() === selectedQuantity.toString()
+  );
+
+  return selectedFinancial ? selectedFinancial.dprice : 0; // Safely handle null selectedFinancial
 };
 
-
-
+// Helper function to get discount based on selected quantity
 const getDiscount = (selectedQuantity, financials) => {
-  const selectedFinancial = financials.find((financial) => financial.quantity.toString() === selectedQuantity);
-  return selectedFinancial ? selectedFinancial.Discount : 0;
+  if (!financials || !Array.isArray(financials) || selectedQuantity == null) {
+    return 0; // Return 0 if financials is not a valid array or selectedQuantity is null
+  }
+
+  const selectedFinancial = financials.find((financial) =>
+    financial?.quantity?.toString() === selectedQuantity.toString()
+  );
+
+  return selectedFinancial ? selectedFinancial.Discount : 0; // Safely handle null selectedFinancial
 };
+
