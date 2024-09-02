@@ -10,7 +10,7 @@ import { savePaymentMethod } from '../slices/cartSlice';
 const PaymentScreen = () => {
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
-  const { shippingAddress, userInfo } = cart;
+  const { shippingAddress, userInfo, totalPrice, orderItems } = cart;
 
   useEffect(() => {
     if (!shippingAddress.address) {
@@ -32,13 +32,17 @@ const PaymentScreen = () => {
         const email = userInfo?.email || 'default_email@example.com'; 
         const phone = userInfo?.phone;
 
-        // Make a request to your backend to create a payment session for UPI
         const { data } = await axios.post('/api/payments/session', {
           order_id: 'testing-order-one', // Replace with your actual order ID
-          amount: cart.totalPrice, // Replace with the actual amount
+          amount: totalPrice, // Ensure totalPrice is defined in the cart state
           customer_email: email, 
           customer_phone: phone,
           payment_page_client_id: 'your_client_id', // Replace with your HDFC payment page client ID
+          first_name: userInfo?.firstName || 'John', // Replace with actual first name
+          last_name: userInfo?.lastName || 'Doe', // Replace with actual last name
+          orderItems, // Pass order items
+          shippingAddress, // Pass shipping address
+          paymentMethod, // Pass payment method
         });
 
         // Redirect to the HDFC payment gateway

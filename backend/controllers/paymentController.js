@@ -76,6 +76,8 @@ export const createPaymentSession = async (req, res) => {
 export const getOrderStatus = async (req, res) => {
   try {
     const { order_id } = req.params;
+  
+
 
     const response = await axios.get(`https://smartgatewayuat.hdfcbank.com/orders/${order_id}`, {
       headers: {
