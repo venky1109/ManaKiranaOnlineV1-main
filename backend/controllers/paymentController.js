@@ -31,24 +31,25 @@ export const createPaymentSession = async (req, res) => {
     const payload = {
       order_id,
       amount,
-      customer_id: req.user._id, // Assuming user ID is used as customer ID
+      customer_id: customerId, // Use a specific customer ID for HDFC API
       customer_email,
       customer_phone,
       payment_page_client_id,
       action: 'paymentPage',
       currency: 'INR',
-      return_url: 'https://shop.merchant.com', // Replace with your actual return URL
+      return_url: 'https://manakirana.online', // Replace with your actual return URL
       description: 'Complete your payment',
       first_name,
       last_name,
     };
 
+    // Call HDFC API to create a payment session
     const response = await axios.post('https://smartgatewayuat.hdfcbank.com/session', payload, {
       headers: {
         Authorization: `Basic ${apiKey}`,
         'Content-Type': 'application/json',
         'x-merchantid': merchantId,
-        'x-customerid': req.user._id, // Assuming user ID is used as customer ID
+        'x-customerid': customerId, // Use a fixed customer ID
       },
     });
 
@@ -65,7 +66,9 @@ export const createPaymentSession = async (req, res) => {
 
     res.json(response.data);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    // Log detailed error information
+    console.error('Error creating payment session:', error.response ? error.response.data : error.message);
+    res.status(500).json({ error: error.response ? error.response.data : 'Failed to create payment session' });
   }
 };
 
@@ -92,7 +95,8 @@ export const getOrderStatus = async (req, res) => {
 
     res.json(response.data);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error fetching order status:', error.response ? error.response.data : error.message);
+    res.status(500).json({ error: error.response ? error.response.data : 'Failed to fetch order status' });
   }
 };
 
@@ -122,6 +126,7 @@ export const refundOrder = async (req, res) => {
 
     res.json(response.data);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error processing refund:', error.response ? error.response.data : error.message);
+    res.status(500).json({ error: error.response ? error.response.data : 'Failed to process refund' });
   }
 };
