@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { createPaymentSession, getOrderStatus, refundOrder } from '../controllers/paymentController.js';
-import { protect } from '../middleware/authMiddleware.js';
+import { protect,admin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
@@ -9,9 +9,9 @@ const router = express.Router();
 router.post('/session', protect,createPaymentSession);
 
 // Route to get order status
-router.get('/orders/:order_id', getOrderStatus);
+router.get('/orders/:order_id', protect,getOrderStatus);
 
 // Route to refund an order
-router.post('/orders/:order_id/refunds', refundOrder);
+router.post('/orders/:order_id/refunds', protect,admin,refundOrder);
 
 export default router; // Use default export
