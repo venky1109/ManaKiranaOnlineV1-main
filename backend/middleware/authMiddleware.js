@@ -8,12 +8,20 @@ const protect = asyncHandler(async (req, res, next) => {
 
   // Read JWT from the 'jwt' cookie
   token = req.cookies.jwt;
+  console.log('Received token from cookies:', token); // Debugging statement
  
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      console.log('Decoded token:', decoded); // Debugging statement
 
       req.user = await User.findById(decoded.userId).select('-password');
+      console.log('Authenticated user:', req.user); // Debugging statement
+      if (!req.user) {
+        console.error('User not found in the database');
+        res.status(401);
+        throw new Error('User not found');
+      }
 
       next();
     } catch (error) {
