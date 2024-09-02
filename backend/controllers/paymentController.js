@@ -43,28 +43,41 @@ export const createPaymentSession = async (req, res) => {
       last_name,
     };
 
-    // Call HDFC API to create a payment session
-    const response = await axios.post('https://smartgatewayuat.hdfcbank.com/session', payload, {
-      headers: {
-        Authorization: `Basic ${apiKey}`,
-        'Content-Type': 'application/json',
-        'x-merchantid': merchantId,
-        'x-customerid': customerId, // Use a fixed customer ID
-      },
-    });
+      // Call HDFC API to create a payment session
+      const response = await axios.post('https://smartgatewayuat.hdfcbank.com/session', payload, {
+        headers: {
+          Authorization: `Basic ${apiKey}`,
+          'Content-Type': 'application/json',
+          'x-merchantid': merchantId,
+          'x-customerid': customerId,
+        },
+      });
 
-    // Save payment history in the Payments collection
-    const newPayment = new Payment({
-      order_id,
-      amount,
-      customer_id: req.user._id,
-      payment_method: req.body.paymentMethod,
-      status: 'initiated',
-    });
+         // Extract the payment URL from the response
+    // Extract the payment URL and expiry time from the response
+const paymentUrl = response.data.payment_links?.web;
+const expiryTime = response.data.payment_links?.expiry; // Capture the expiry time
+
+console.log('Payment URL:', paymentUrl);
+console.log('Expiry Time:', expiryTime);
+
+    if (!paymentUrl) {
+      throw new Error('Payment URL not found in the response');
+    }
+
+  // Save payment history in the Payments collection
+  const newPayment = new Payment({
+    order_id,
+    amount,
+    customer_id: req.user._id,
+    payment_method: req.body.paymentMethod,
+    status: 'initiated',
+  });
 
     await newPayment.save();
 
-    res.json(response.data);
+     // Send the payment URL to the frontend
+     res.json({ paymentUrl });
   } catch (error) {
     // Log detailed error information
     console.error('Error creating payment session:', error.response ? error.response.data : error.message);

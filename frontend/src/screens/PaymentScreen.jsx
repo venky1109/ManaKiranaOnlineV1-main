@@ -45,8 +45,16 @@ const PaymentScreen = () => {
           paymentMethod, // Pass payment method
         });
 
+        const paymentUrl = data.paymentUrl; // Extract payment URL from response
+
+      if (!paymentUrl) {
+        console.error('Payment URL not received from the server');
+        return;
+      }
+
+
         // Redirect to the HDFC payment gateway
-        window.location.href = data.payment_url; // Redirect to the payment URL received from the backend
+        window.location.href = paymentUrl; // Redirect to the payment URL received from the backend
       } catch (error) {
         console.error('Error creating UPI payment session:', error.message);
         // Handle error (e.g., show an error message to the user)
