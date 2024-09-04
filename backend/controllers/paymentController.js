@@ -1,16 +1,22 @@
 import axios from 'axios';
 import Order from '../models/orderModel.js';
 import Payment from '../models/paymentModel.js';
+import { jwtEncryptRequest  } from '../utils/encryptionUtils.js'; // Import encryption utility
 
+// Load environment variables
 const apiKey = process.env.HDFC_API_KEY; // Base64 encoded API key
 const merchantId = process.env.MERCHANT_ID; // Merchant ID
 const customerId = process.env.CUSTOMER_ID; // Customer ID
+const privateKeyString = process.env.PRIVATE_KEY; // Load private key from environment variable
+const publicString=process.env.PUBLIC_KEY;
+const keyId = process.env.KEY_ID; // Load key ID from environment variable
 
 // Function to create a payment session
 export const createPaymentSession = async (req, res) => {
   try {
-    const { order_id, amount, customer_email, customer_phone, payment_page_client_id, first_name, last_name } = req.body;
-
+    const { order_id, amount, customer_email, customer_phone, name } = req.body;
+    
+        // console.log(req.body.orderItems)
     // Create a new order in the Orders collection
     const newOrder = new Order({
       order_id,
@@ -28,56 +34,63 @@ export const createPaymentSession = async (req, res) => {
 
     await newOrder.save();
 
+    // Set expiry time to 1 hour from current time
+    // const currentTime = new Date(); // Current time in UTC
+    // const expiryTime = new Date(currentTime.getTime() + 60 * 60 * 1000); // Set expiry to 1 hour from now
+
     const payload = {
-      order_id,
-      amount,
-      customer_id: customerId, // Use a specific customer ID for HDFC API
-      customer_email,
-      customer_phone,
-      payment_page_client_id,
-      action: 'paymentPage',
-      currency: 'INR',
-      return_url: 'https://manakirana.online', // Replace with your actual return URL
-      description: 'Complete your payment',
-      first_name,
-      last_name,
-    };
+        "order_id": order_id,
+        "amount": amount,
+        "customer_id": customerId, // Use a specific customer ID for HDFC API
+        "customer_email": customer_email,
+        "customer_phone": customer_phone,
+        "payment_page_client_id": "hdfcmaster",
+        "action": "paymentPage",
+        "return_url": "https://manakirana.online", // Replace with your actual return URL
+        "description": "Complete your payment",
+        "name": name,
+        "metadata.JUSPAY:gateway_reference_id": "payu_test"
+      };
 
-      // Call HDFC API to create a payment session
-      const response = await axios.post('https://smartgatewayuat.hdfcbank.com/session', payload, {
-        headers: {
-          Authorization: `Basic ${apiKey}`,
-          'Content-Type': 'application/json',
-          'x-merchantid': merchantId,
-          'x-customerid': customerId,
-        },
-      });
 
-         // Extract the payment URL from the response
+
+      console.log('Payload before encryption:', JSON.stringify(payload, null, 2)); // Pretty-print the payload
+
+    // Encrypt the payload using the utility function
+    const encryptedPayload = await jwtEncryptRequest(payload, keyId, publicString,privateKeyString);
+    console.log(encryptedPayload)
+
+    // Call HDFC API to create a payment session with the encrypted payload
+    const response = await axios.post('https://smartgatewayuat.hdfcbank.com/session', encryptedPayload, {
+      headers: {
+        Authorization: `Basic ${apiKey}`,
+        'Content-Type': 'application/json',
+        'x-merchantid': merchantId,
+        'x-customerid': customerId,
+      },
+    });
+
     // Extract the payment URL and expiry time from the response
-const paymentUrl = response.data.payment_links?.web;
-const expiryTime = response.data.payment_links?.expiry; // Capture the expiry time
-
-console.log('Payment URL:', paymentUrl);
-console.log('Expiry Time:', expiryTime);
+    const paymentUrl = response.data.payment_links?.web;
+    const receivedExpiryTime = response.data.payment_links?.expiry; // Capture the expiry time
 
     if (!paymentUrl) {
       throw new Error('Payment URL not found in the response');
     }
 
-  // Save payment history in the Payments collection
-  const newPayment = new Payment({
-    order_id,
-    amount,
-    customer_id: req.user._id,
-    payment_method: req.body.paymentMethod,
-    status: 'initiated',
-  });
+    // Save payment history in the Payments collection
+    const newPayment = new Payment({
+      order_id,
+      amount,
+      customer_id: req.user._id,
+      payment_method: req.body.paymentMethod,
+      status: 'initiated',
+    });
 
     await newPayment.save();
 
-     // Send the payment URL to the frontend
-     res.json({ paymentUrl });
+    // Send the payment URL to the frontend
+    res.json({ paymentUrl });
   } catch (error) {
     // Log detailed error information
     console.error('Error creating payment session:', error.response ? error.response.data : error.message);
@@ -89,8 +102,6 @@ console.log('Expiry Time:', expiryTime);
 export const getOrderStatus = async (req, res) => {
   try {
     const { order_id } = req.params;
-  
-
 
     const response = await axios.get(`https://smartgatewayuat.hdfcbank.com/orders/${order_id}`, {
       headers: {

@@ -1,16 +1,43 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios'; // Import axios to make HTTP requests
+import axios from 'axios';
 import FormContainer from '../components/FormContainer';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { savePaymentMethod } from '../slices/cartSlice';
+import { clearCartItems } from '../slices/cartSlice'; // Import clearCartItems action
 
 const PaymentScreen = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+//   const location = useLocation();
+
   const cart = useSelector((state) => state.cart);
-  const { shippingAddress, userInfo, totalPrice, orderItems } = cart;
+  const userInfo = useSelector((state) => state.auth.userInfo);
+  const orderInfo = useSelector((state) => state.order); // Access order details from Redux
+
+  console.log(cart)
+  console.log('userInfo'+userInfo.name)
+  console.log('orderInfo'+JSON.stringify(orderInfo.orderItems, null, 2))
+
+
+  const { shippingAddress, totalPrice } = cart;
+
+  const orderId = orderInfo?.orderId;
+//   const orderItems = orderInfo?.orderItems || [];
+
+
+      // Map the order items to match the backend structure
+      const orderItems = orderInfo.orderItems.map((item) => ({
+        product: item.productId, // Use `product` for the product ID as expected
+        name: item.name,
+        quantity: item.quantity, // Ensure this matches the expected field
+        brand: item.brand,
+        qty: item.qty,
+        image: item.image,
+        price: item.price,
+      }));
 
   useEffect(() => {
     if (!shippingAddress.address) {
@@ -20,53 +47,50 @@ const PaymentScreen = () => {
 
   const [paymentMethod, setPaymentMethod] = useState('UPI');
 
-  const dispatch = useDispatch();
-
   const submitHandler = async (e) => {
     e.preventDefault();
     dispatch(savePaymentMethod(paymentMethod));
 
     if (paymentMethod === 'UPI') {
       try {
-        // Provide fallback values if userInfo is missing
         const email = userInfo?.email || 'default_email@example.com'; 
-        const phone = userInfo?.phone;
+        
+        const { data } = await axios.post('/api/payments/create-session', {
+            order_id: orderInfo.orderId, // Replace with your actual order ID
+            amount: totalPrice, // Ensure totalPrice is defined in the cart state
+            customer_email: email, 
+            customer_phone: userInfo.phoneNo,
+            user:userInfo._id,
+            name: userInfo?.name || 'John', // Replace with actual first name
+            orderItems:orderItems, // Pass order items
+            shippingAddress:shippingAddress, // Pass shipping address
+            paymentMethod:paymentMethod, // Pass payment method
+          });
+  
 
-        const { data } = await axios.post('/api/payments/session', {
-          order_id: 'testing-order-one', // Replace with your actual order ID
-          amount: totalPrice, // Ensure totalPrice is defined in the cart state
-          customer_email: email, 
-          customer_phone: phone,
-          payment_page_client_id: 'your_client_id', // Replace with your HDFC payment page client ID
-          first_name: userInfo?.firstName || 'John', // Replace with actual first name
-          last_name: userInfo?.lastName || 'Doe', // Replace with actual last name
-          orderItems, // Pass order items
-          shippingAddress, // Pass shipping address
-          paymentMethod, // Pass payment method
-        });
+        const paymentUrl = data.paymentUrl;
 
-        const paymentUrl = data.paymentUrl; // Extract payment URL from response
+        if (!paymentUrl) {
+          console.error('Payment URL not received from the server');
+          return;
+        }
 
-      if (!paymentUrl) {
-        console.error('Payment URL not received from the server');
-        return;
-      }
-
-
-        // Redirect to the HDFC payment gateway
-        window.location.href = paymentUrl; // Redirect to the payment URL received from the backend
+        window.location.href = `${paymentUrl}&returnUrl=${encodeURIComponent(
+          `${window.location.origin}/confirm-order?orderId=${orderId}&status=success`
+        )}`;
       } catch (error) {
         console.error('Error creating UPI payment session:', error.message);
-        // Handle error (e.g., show an error message to the user)
       }
     } else {
-      navigate('/placeorder');
+      // Simulate payment success for Cash/UPI Payment On Delivery
+      dispatch(clearCartItems()); // Clear the cart
+      navigate(`/confirm-order?orderId=${orderId}&status=success`);
     }
   };
 
   return (
     <FormContainer>
-      <CheckoutSteps step1 step2 step3 />
+      <CheckoutSteps step1 step2 step3 step4 />
       <h1>Payment Method</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group>
@@ -92,16 +116,6 @@ const PaymentScreen = () => {
               checked={paymentMethod === 'UPI'}
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
-            {/* <Form.Check
-              className='my-2'
-              type='radio'
-              label='PayPal or Credit Card'
-              id='PayPal'
-              name='paymentMethod'
-              value='PayPal'
-              checked={paymentMethod === 'PayPal'}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            ></Form.Check> */}
           </Col>
         </Form.Group>
 
